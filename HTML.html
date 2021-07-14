@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+////////////////////////////////////////////////////////////////////////////////////////
+			//Creates new scene.
+			const scene = new THREE.Scene();
+			
+			//Creates a camera.
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			
+			//Creates a renderer.
+			const renderer = new THREE.WebGLRenderer();
+			
+			//Sets render size.
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			
+			//Unknown.
+			document.body.appendChild( renderer.domElement );
+			////////////////////////////////////////////////////////////////////////////
+			
+			////////////////////////////////////////////////////////////////////////////
+			//Creates 1st  cube.
+			const geometry = new THREE.BoxGeometry();
+
+			//Creates a simple material.
+			//const material = new THREE.MeshBasicMaterial( { color: 0xFF0000 } );
+			const material = new THREE.MeshPhongMaterial({color: 0xFF0000, flatShading: true,});
+
+			//Adds the material to the cube.
+			const cube1 = new THREE.Mesh( geometry, material );
+			cube1.position.set(-2, 0, 0);
+			
+			//Adds the cube.
+			scene.add( cube1 );
+			
+			////////////////////////////////////////////////////////////////////////////
+			
+			////////////////////////////////////////////////////////////////////////////
+
+			//Adds the material to the cube.
+			const cube2 = new THREE.Mesh( geometry, material );
+			cube2.position.set(2, 0, 0);
+			
+			//Adds the cube.
+			scene.add( cube2 );
+			////////////////////////////////////////////////////////////////////////////
+			
+			////////////////////////////////////////////////////////////////////////////
+			//Add scene lights.
+			const light = new THREE.DirectionalLight(0xFFFFFF, 1.2);
+			
+			//Sets worlds position.
+			light.position.set(12, 10, 0);
+			
+			//Sets rotation.
+			light.target.position.set(0, 0, -45);
+			
+			//Add above light.
+			scene.add(light);
+			scene.add(light.target);
+			
+			//const helper = new THREE.DirectionalLightHelper(light, 5 );
+			//scene.add( helper );
+			////////////////////////////////////////////////////////////////////////////
+			
+			//Positions camera.
+			camera.position.z = 5;
+			////////////////////////////////////////////////////////////////////////////
+			
+			//Animates the cube.
+			const animateCubeOne = function () 
+			{
+				requestAnimationFrame( animateCubeOne );
+
+				cube1.rotation.x += 0.01;
+				cube1.rotation.y += 0.01;
+
+				renderer.render( scene, camera );
+			};
+			
+			const animateCubeTwo = function () 
+			{
+				requestAnimationFrame( animateCubeTwo );
+
+				cube2.rotation.x -= 0.01;
+				cube2.rotation.y -= 0.01;
+
+				renderer.render( scene, camera );
+			};
+			
+			//Runs the animate function located above. 
+			//Animate must run in update loop.
+			animateCubeOne();
+			animateCubeTwo();
+////////////////////////////////////////////////////////////////////////////////////////
+		</script>
+	</body>
+</html>
