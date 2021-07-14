@@ -8,7 +8,7 @@
 		</style>
 	</head>
 	<body>
-		<script src="js/three.js"></script>
+		<script src="build/three.js"></script>
 		<script>
 ////////////////////////////////////////////////////////////////////////////////////////
 			//Creates new scene.
@@ -26,7 +26,12 @@
 			//Unknown.
 			document.body.appendChild( renderer.domElement );
 			////////////////////////////////////////////////////////////////////////////
-			
+			//Create sphere.
+			const geometrySphere = new THREE.SphereGeometry(0.5,32, 32);
+			const materialSphere = new THREE.MeshPhongMaterial({color: 0x0BB5FF, flatShading: false,});
+			const sphere1 = new THREE.Mesh( geometrySphere, materialSphere );
+			sphere1.position.set(0, 1, 0);
+			scene.add( sphere1 );
 			////////////////////////////////////////////////////////////////////////////
 			//Creates 1st  cube.
 			const geometry = new THREE.BoxGeometry();
@@ -96,11 +101,21 @@
 
 				renderer.render( scene, camera );
 			};
+			const animateSphereOne = function () 
+			{
+				requestAnimationFrame( animateSphereOne );
+
+				sphere1.rotation.x += 0.01;
+				sphere1.rotation.y += 0.01;
+
+				renderer.render( scene, camera );
+			};
 			
 			//Runs the animate function located above. 
 			//Animate must run in update loop.
 			animateCubeOne();
 			animateCubeTwo();
+			animateSphereOne();
 ////////////////////////////////////////////////////////////////////////////////////////
 		</script>
 	</body>
